@@ -1,5 +1,7 @@
-const SysDataLib = require("../../lib/systemdataget");
-const SysData = new SysDataLib;
+const SysData = require("../../lib/systemdataget");
+const io = require("socket.io-client");
+
+const socket = io("http://localhost:9999"); //@TODO
 
 SysData.FirstData(() => {
     setInterval(() => {
