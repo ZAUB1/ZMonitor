@@ -26,9 +26,34 @@ class Systems {
         });
     }
 
-    AddSystem(data)
+    AddSystem(slot, data)
     {
+        this.systems[slot] = {
+            cpumodel: data.cpumodel,
+            arch = data.arch,
+            hostname = data.hostname,
+            corecount = data.corecount,
+            totalmem = data.totalmem,
+            cpufreq = data.cpufreq,
 
+            loadavg = data.loadavg,
+            uptime = data.uptime,
+
+            usedmem = data.usedmem,
+            cpuload = data.cpuloadper,
+
+            usedmemavg = [data.usedmem],
+            cpuloadavg = [data.cpuloadper]
+        }
+    }
+
+    UpdateSystem(slot, data)
+    {
+        this.systems[slot].usedmem = data.usedmem;
+        this.systems[slot].cpuload = data.cpuloadper;
+
+        this.systems[slot].usedmemavg[this.systems[slot].usedmemavg.length] = data.usedmem;
+        this.systems[slot].cpuloadavg[this.systems[slot].cpuloadavg.length] = data.cpuloadper;
     }
 
     GetSystems()

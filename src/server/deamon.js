@@ -23,8 +23,21 @@ function handler(req, res)
 
 app.listen(9999);
 
+verb.log("-> Server listening on port : " + 9999);
+
 io.on("connection", (sock) => {
+    const slot = Systems.systems.length;
+
     verb.log("-> Client connected : " + sock.id + ", " + sock.handshake.address);
+
+    sock.on("client:hello", (sysdata) => {
+        //if (!Systems.Known(sysdata.hostname))
+            Systems.AddSystem(slot, sysdata);
+    });
+
+    sock.on("client:alive", (sysdata) => {
+        Systems.UpdateSystem(slot, sysdata);
+    });
 
     sock.on("disconnect", () => {
         verb.log("-> Client disconnected : " + sock.id + ", " + sock.handshake.address);
