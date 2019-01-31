@@ -7,7 +7,9 @@ const verb = require("../../lib/verbose");
 
 function handler(req, res)
 {
-    fs.readFile(__dirname + "/index.html",
+    verb.log("-> [WEB] Client connecting");
+
+    fs.readFile(__dirname + "/panel/index.html",
 
     (err, data) => {
         if (err)

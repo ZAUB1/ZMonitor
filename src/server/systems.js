@@ -30,20 +30,20 @@ class Systems {
     {
         this.systems[slot] = {
             cpumodel: data.cpumodel,
-            arch = data.arch,
-            hostname = data.hostname,
-            corecount = data.corecount,
-            totalmem = data.totalmem,
-            cpufreq = data.cpufreq,
+            arch: data.arch,
+            hostname: data.hostname,
+            corecount: data.corecount,
+            totalmem: data.totalmem,
+            cpufreq: data.cpufreq,
 
-            loadavg = data.loadavg,
-            uptime = data.uptime,
+            loadavg: data.loadavg,
+            uptime: data.uptime,
 
-            usedmem = data.usedmem,
-            cpuload = data.cpuloadper,
+            usedmem: data.usedmem,
+            cpuload: data.cpuloadper,
 
-            usedmemavg = [data.usedmem],
-            cpuloadavg = [data.cpuloadper]
+            usedmemavg: [data.usedmem],
+            cpuloadavg: [data.cpuloadper]
         }
     }
 
