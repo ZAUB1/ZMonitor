@@ -18,7 +18,7 @@
         #black {
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
+            background-color: #fafafa;
             display: flex;
             color: white;
             font-family: 'Oswald', sans-serif;
@@ -29,17 +29,154 @@
             justify-content: center;
             align-items: center;
         }
+
+        #menu {
+            position: absolute;
+            width: 4%;
+            height: 100%;
+            left: 0%;
+
+            background-color: rgb(37, 37, 37);
+        }
+
+        #logo {
+            position: absolute;
+            width: 100%;
+            height: 6%;
+
+            background-color: black;
+        }
+
+        #items {
+            display: flex;
+            position: absolute;
+            flex-direction: column;
+            top: 6%;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        #item {
+            position: relative;
+            vertical-align: bottom;
+            width: 100%;
+            height: 8%;
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+        }
+
+        #itembottom {
+            position: absolute;
+            bottom: 6%;
+            width: 100%;
+            height: 8%;
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+        }
+
+        zboub {
+            position: absolute;
+            top: 25%;
+            right: 0%;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right:10px solid white;
+            opacity: 0;
+            transition: .2s linear opacity;
+        }
+
+        #iconmenu {
+            position: absolute;
+            top: 20%;
+            left: 25%;
+        }
+
+        #maintitle {
+            position: absolute;
+            width: 96%;
+            height: 6%;
+            right: 0%;
+            top: 0%;
+
+            border-bottom: 1px solid rgb(219, 219, 219);
+        }
+
+        #titletext {
+            position: absolute;
+            color: rgb(75, 75, 75);
+            left: 1%;
+
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+            transition: .2s linear opacity;
+        }
     </style>
 
     <script type="text/javascript">
         $(() => {
-            
+            var inpage = 0;
+            var lastcl;
+
+            arrowhover = function(_this)
+            {
+                const arrow = _this.childNodes[1];
+                arrow.style.opacity = 1;
+            }
+
+            arrowaway = function(_this)
+            {
+                const arrow = _this.childNodes[1];
+
+                if (arrow.classList[0] == "arrow1" && inpage == 1)
+                {
+                    arrow.style.opacity = 1;
+                    lastcl = arrow;
+                }
+                else if (arrow.classList[0] == "arrow2" && inpage == 2)
+                {
+                    arrow.style.opacity = 1;
+                    lastcl = arrow;
+                }
+                else
+                    arrow.style.opacity = 0;
+            }
         });
     </script>
 </head>
 
 <body>
     <div id="black">
-        test
+        <div id=menu>W
+            <div id=logo></div>
+
+            <div id=items>
+                <div id=item onmouseover="arrowhover(this)" onmouseout="arrowaway(this)" onclick="selectmenu(0)">
+                    <zboub class=arrow1></zboub>
+                    <i id=iconmenu class="material-icons">home</i>
+                </div>
+                <div id=item onmouseover="arrowhover(this)" onmouseout="arrowaway(this)" onclick="selectmenu(1)">
+                    <zboub class=arrow2></zboub>
+                    <i id=iconmenu class="material-icons">desktop_mac</i>
+                </div>
+                <div id=item onmouseover="arrowhover(this)" onmouseout="arrowaway(this)" onclick="selectmenu(2)" href="#test-popup">
+                    <zboub class=arrow3></zboub>
+                    <i id=iconmenu class="material-icons">insert_chart_outlined</i>
+                </div>
+                <div id=itembottom class=clickitem onmouseover="arrowhover(this)" onmouseout="arrowaway(this)" onclick="selectmenu(2)" href="#test-popup">
+                    <zboub class=arrow4></zboub>
+                    <i id=iconmenu class="material-icons">settings</i>
+                </div>
+            </div>
+        </div>
+
+        <div id=maintitle>
+            <div id=titletext>ZMonitor</div>
+        </div>
     </div>
 </body>

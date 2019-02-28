@@ -13,4 +13,8 @@ SysData.FirstData(() => {
     setInterval(() => {
         socket.emit("client:alive", SysData.Get());
     }, 60000);
+
+    socket.on('disconnect', () => {
+        process.exit(); //Might change in the future for a proper standby "reconnection" state
+    })
 });

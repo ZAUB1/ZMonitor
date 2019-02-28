@@ -7,7 +7,7 @@ const verb = require("../../lib/verbose");
 
 function handler(req, res)
 {
-    verb.log("-> [WEB] Client connecting");
+    verb.logok("-> Web Client connecting");
 
     fs.readFile(__dirname + "/panel/index.html",
 
@@ -25,7 +25,11 @@ function handler(req, res)
 
 app.listen(9999);
 
-verb.log("-> Server listening on port : " + 9999);
+verb.logok("-> Server listening on port : " + 9999);
+
+/* app.post("/addsystem", (req, res) => {
+
+}); */
 
 io.on("connection", (sock) => {
     const slot = Systems.systems.length;
@@ -35,6 +39,8 @@ io.on("connection", (sock) => {
     sock.on("client:hello", (sysdata) => {
         //if (!Systems.Known(sysdata.hostname))
             Systems.AddSystem(slot, sysdata);
+
+            console.log(sysdata)
     });
 
     sock.on("client:alive", (sysdata) => {
