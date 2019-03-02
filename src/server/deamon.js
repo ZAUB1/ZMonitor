@@ -1,20 +1,26 @@
-module.exports = function(stat)
-{
-    switch (stat)
+module.exports = {
+    ChangeWeb: (stat) =>
     {
-        case 0:
-            app.close();
-            console.log("[\x1b[31m%s\x1b[0m] -> Web server stopped", " WARN ");
+        switch (stat)
+        {
+            case 0:
+                app.close();
+                console.log("[\x1b[31m%s\x1b[0m] -> Web server stopped", " WARN ");
 
-            break;
+                break;
 
-        case 1:
-            app.listen(9999);
-            verb.logok("-> Web server started");
+            case 1:
+                app.listen(9999);
+                verb.logok("-> Web server started");
 
-            break;
+                break;
+        }
+    },
+
+    GetSys: () => {
+        return Systems.GetSystems();
     }
-};
+}
 
 const app = require("http").createServer(handler);
 const io = require("socket.io")(app);
@@ -57,8 +63,6 @@ io.on("connection", (sock) => {
     sock.on("client:hello", (sysdata) => {
         //if (!Systems.Known(sysdata.hostname))
             Systems.AddSystem(slot, sysdata);
-
-            console.log(sysdata)
     });
 
     sock.on("client:alive", (sysdata) => {
