@@ -3,6 +3,12 @@ A standalone, free & open-source monitoring solutions for multiple servers / wor
 
 Currently under development..
 
+## First setup :
+```sh
+# Install dependencies
+$ npm install
+```
+
 ## Usage (server)
 
 Here are the basic commands to start the server in a few different ways :
@@ -22,3 +28,4 @@ In console commands :
 |`clear`          		|Clears the console.|
 |`exit`       			|Exits.|
 |`help`       			|Shows all available commands.|
+
