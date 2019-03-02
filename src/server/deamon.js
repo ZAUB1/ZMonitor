@@ -1,3 +1,21 @@
+module.exports = function(stat)
+{
+    switch (stat)
+    {
+        case 0:
+            app.close();
+            console.log("[\x1b[31m%s\x1b[0m] -> Web server stopped", " WARN ");
+
+            break;
+
+        case 1:
+            app.listen(9999);
+            verb.logok("-> Web server started");
+
+            break;
+    }
+};
+
 const app = require("http").createServer(handler);
 const io = require("socket.io")(app);
 const fs = require("fs");

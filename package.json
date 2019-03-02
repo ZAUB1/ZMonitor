@@ -1,0 +1,30 @@
+{
+  "name": "zmonitor",
+  "version": "1.0.0",
+  "description": "Currently under development..",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "server-start": "node ./src/server/deamonize.js start",
+    "server-stop": "node ./src/server/deamonize.js stop",
+    "server-console": "node ./src/server/deamon.js -v -c",
+    "server-verbose": "node ./src/server/deamon.js -v",
+    "client": "node ./src/client/deamon.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZAUB1/ZMonitor.git"
+  },
+  "author": "ZAUB1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZAUB1/ZMonitor/issues"
+  },
+  "homepage": "https://github.com/ZAUB1/ZMonitor#readme",
+  "dependencies": {
+    "daemonize2": "^0.4.2",
+    "socketio": "^1.0.0"
+  }
+}
