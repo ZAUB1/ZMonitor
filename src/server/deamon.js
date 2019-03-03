@@ -62,7 +62,7 @@ io.on("connection", (sock) => {
 
     sock.on("client:hello", (sysdata) => {
         //if (!Systems.Known(sysdata.hostname))
-            Systems.AddSystem(slot, sysdata);
+            Systems.AddSystem(slot, sysdata, sock.id);
     });
 
     sock.on("client:alive", (sysdata) => {
@@ -70,6 +70,7 @@ io.on("connection", (sock) => {
     });
 
     sock.on("disconnect", () => {
+        Systems.RmSystem(sock.id);
         verb.log("-> Client disconnected : " + sock.id + ", " + sock.handshake.address);
     });
 });

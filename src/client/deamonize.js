@@ -1,5 +1,5 @@
 const daemon = require("daemonize2").setup({
-    main: "deamon.js",
+    main: "daemon.js",
     name: "client",
     pidfile: "deamonc.pid"
 });

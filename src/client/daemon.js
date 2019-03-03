@@ -17,6 +17,9 @@ SysData.FirstData(() => {
     }, 60000);
 
     socket.on('connect', () => {
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+
         console.log(":: Connected to server.");
     });
 
@@ -25,4 +28,45 @@ SysData.FirstData(() => {
 
         process.exit(); //Might change in the future for a proper standby "reconnection" state
     })
+
+    var tries = 0;
+
+    setInterval(() => {
+        if (!socket.connected)
+        {
+            socket.open();
+
+            tries += 1;
+
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+
+            console.log(":: Server not found yet, trying reconnection (" + tries + ")");
+
+            if (tries >= 3)
+            {
+                console.log(":: Server not found, exiting.");
+                process.exit();
+            }
+        }
+        else
+        {
+            tries = 0;
+        }
+    }, 30000);
+
+    var iy = 0;
+
+    setInterval(() => {
+        if (!socket.connected)
+        {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+
+            iy = (iy + 1) % 4;
+            const dots = new Array(iy + 1).join(".");
+
+            process.stdout.write("Connecting " + dots);
+        }
+    }, 500);
 });

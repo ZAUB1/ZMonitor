@@ -26,7 +26,7 @@ class Systems {
         });
     }
 
-    AddSystem(slot, data)
+    AddSystem(slot, data, sock)
     {
         this.systems[slot] = {
             cpumodel: data.cpumodel,
@@ -46,7 +46,14 @@ class Systems {
             cpuloadavg: [data.cpuloadper],
 
             ifips: data.ifips,
+
+            sock: sock
         }
+    }
+
+    RmSystem(sock)
+    {
+        this.systems.splice(this.systems.findIndex(x => x.sock == sock), 1);
     }
 
     UpdateSystem(slot, data)
