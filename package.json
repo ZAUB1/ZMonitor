@@ -11,7 +11,10 @@
     "server-stop": "node ./src/server/deamonize.js stop",
     "server-console": "node ./src/server/deamon.js -v -c",
     "server-verbose": "node ./src/server/deamon.js -v",
-    "client": "node ./src/client/deamon.js"
+
+    "client-verbose": "node ./src/client/daemon.js",
+    "client-start": "node ./src/client/deamonize.js start",
+    "client-stop": "node ./src/client/deamonize.js stop"
   },
   "repository": {
     "type": "git",

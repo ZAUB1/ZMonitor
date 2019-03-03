@@ -43,7 +43,9 @@ class Systems {
             cpuload: data.cpuloadper,
 
             usedmemavg: [data.usedmem],
-            cpuloadavg: [data.cpuloadper]
+            cpuloadavg: [data.cpuloadper],
+
+            ifips: data.ifips,
         }
     }
 

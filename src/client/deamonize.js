@@ -1,7 +1,7 @@
 const daemon = require("daemonize2").setup({
     main: "deamon.js",
-    name: "server",
-    pidfile: "deamons.pid"
+    name: "client",
+    pidfile: "deamonc.pid"
 });
 
 switch (process.argv[2])
