@@ -45,6 +45,11 @@ function handler(req, res)
         res.writeHead(200);
         res.end(data);
     });
+
+    if (req.method === 'POST')
+    {
+        res.end(JSON.stringify(Systems.GetSystems()))
+    }
 }
 
 app.listen(9999);
