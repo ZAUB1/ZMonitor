@@ -24,9 +24,7 @@ SysData.FirstData(() => {
     });
 
     socket.on('disconnect', () => {
-        console.log(":: Server lost, exiting.");
-
-        process.exit(); //Might change in the future for a proper standby "reconnection" state
+        console.log(":: Server lost, trying to reconnect.");
     })
 
     var tries = 0;
