@@ -48,7 +48,37 @@ function handler(req, res)
 
     if (req.method === 'POST')
     {
-        res.end(JSON.stringify(Systems.GetSystems()))
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+
+        req.on('end', () => {
+            switch (req.url)
+            {
+                case "/sysget":
+                    const sys = JSON.stringify(Systems.GetSystems());
+                    res.end(sys);
+    
+                    break;
+                
+                case "/shutdown":
+                    const sockm = Systems.GetSock(JSON.parse(body).machine);
+                    sockm.emit("shutdown");
+
+                    res.end();
+
+                    break;
+
+                case "/reboot":
+                    const sockm = Systems.GetSock(JSON.parse(body).machine);
+                    sockm.emit("reboot");
+
+                    res.end();
+
+                    break;
+            }
+        });
     }
 }
 
@@ -67,7 +97,7 @@ io.on("connection", (sock) => {
 
     sock.on("client:hello", (sysdata) => {
         //if (!Systems.Known(sysdata.hostname))
-            Systems.AddSystem(slot, sysdata, sock.id);
+            Systems.AddSystem(slot, sysdata, sock);
     });
 
     sock.on("client:alive", (sysdata) => {

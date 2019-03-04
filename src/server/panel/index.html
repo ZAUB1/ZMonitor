@@ -216,6 +216,45 @@
             background-color: grey;
             border-radius: 15px;
         }
+
+        #shutdown {
+            position: absolute;
+            top: 20%;
+            right: 11.5%;
+            font-size: 26px;
+            width: 28px;
+            height: 28px;
+            color: black;
+            transition: all .2s linear;
+        }
+
+        #shutdown:hover {
+            color: crimson;
+            transition: all .2s linear;
+        }
+
+        #shuttext {
+            position: absolute;
+            font-size: 18px;
+            left: 120%;
+            bottom: 10%;
+        }
+
+        #reboot {
+            position: absolute;
+            top: 60%;
+            right: 11.5%;
+            font-size: 26px;
+            width: 28px;
+            height: 28px;
+            color: black;
+            transition: all .2s linear;
+        }
+
+        #reboot:hover {
+            color: rgb(23, 189, 23);
+            transition: all .2s linear;
+        }
     </style>
 
     <script type="text/javascript">
@@ -311,6 +350,20 @@
 
                 systems.innerHTML = context;
             }
+
+            sendshutdown = function(machine)
+            {
+                $.post('/shutdown', JSON.stringify({machine: machine}), (data) => {
+                    //
+                });
+            }
+
+            sendreboot = function(machine)
+            {
+                $.post('/reboot', JSON.stringify({machine: machine}), (data) => {
+                    //
+                });
+            }
         });
     </script>
 </head>
@@ -345,14 +398,20 @@
                 <div id=machinelogo>
                     <span class="mdi mdi-linux" aria-hidden></span>
                 </div>
+
                 <div id=litsep></div>
+
                 <div id=hostname>Hostname : Pixouille</div>
                 <div id=ip>IP : 127.0.0.1</div>
                 <div id=uptime>Uptime : 1 d, 3 h, 45 s</div>
                 <div id=cpu>CPU : Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz (1.5GHz)</div>
                 <div id=memory>Memory: 3.9 / 6.0G</div>
                 <div id=os>OS : Linux</div>
+
                 <div id=comsep></div>
+
+                <div id=shutdown onclick="sendshutdown(0)"><span class="mdi mdi-power" aria-hidden></span><div id=shuttext>Shutdown</div></div>
+                <div id=reboot onclick="sendreboot(0)"><span class="mdi mdi-rotate-right" aria-hidden></span><div id=shuttext>Reboot</div></div>
             </div>
         </div>
 

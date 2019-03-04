@@ -1,4 +1,5 @@
 const SysData = require("../../lib/systemdataget");
+const Shutdown = require("../../lib/shutdown");
 const io = require("socket.io-client");
 
 const socket = io("http://localhost:9999"); //@TODO
@@ -26,6 +27,14 @@ SysData.FirstData(() => {
     socket.on('disconnect', () => {
         console.log(":: Server lost, trying to reconnect.");
     })
+
+    socket.on("shutdown", () => {
+        Shutdown.Shutdown();
+    });
+
+    socket.on("reboot", () => {
+        Shutdown.Reboot();
+    });
 
     var tries = 0;
 

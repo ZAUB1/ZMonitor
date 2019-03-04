@@ -5,6 +5,7 @@ class Systems {
     constructor()
     {
         this.systems = [];
+        this.socks = [];
 
         fs.readFile("systems.json", 'utf8', (err, data) => {
             if (err)
@@ -47,8 +48,11 @@ class Systems {
 
             ifips: data.ifips,
 
-            sock: sock
+            sock: sock.id,
+            ///sockthing: sock
         }
+
+        this.socks[slot] = sock;
     }
 
     RmSystem(sock)
@@ -68,6 +72,11 @@ class Systems {
     GetSystems()
     {
         return this.systems;
+    }
+
+    GetSock(machine)
+    {
+        return this.socks[machine];
     }
 };
 
