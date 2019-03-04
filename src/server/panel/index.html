@@ -306,8 +306,12 @@
                         break;
                     case 1:
                         changetitle("ZMonitor : Systems");
-                        //showsystems();
+                        showsystems();
                         systemsc.style.opacity = 1;
+
+                        $.post('/insys', "", (data) => {
+                            
+                        });
 
                         break;
                     case 2:
@@ -339,16 +343,47 @@
 
                 for (let i = 0; i < systems.length; i++)
                 {
-                    var oslodo = "";
+                    var oslogo = "";
+                    var avgmem = 0.0;
 
-                    //switch (zposts)
+                    for (let ii = 0; ii < systems[i].usedmemavg.length; ii++)
+                        avgmem += parseInt(systems[i].usedmemavg[ii]);
+
+                    avgmem = (avgmem / systems[i].usedmemavg.length).toFixed(2);
+
+                    switch (systems[i].platform)
+                    {
+                        case "win32":
+                            oslogo = "windows";
+                            break;
+
+                        case "linux":
+                            oslogo = "linux";
+                            break;
+
+                        case "darwin":
+                            oslogo = "apple";
+                            break;
+                    }
 
                     context += "<div id=system>\
-                        ZEZAEAZE\
-                    </div>\n";
+                            <div id=machinelogo>\
+                                <span class='mdi mdi-" + oslogo + "' aria-hidden></span>\
+                            </div>\
+                            <div id=litsep></div>\
+                            <div id=hostname>Hostname : " + systems[i].hostname + " </div>\
+                            <div id=ip>IP : " + systems[i].ifips[0].addr + " </div>\
+                            <div id=uptime>Uptime : " + systems[i].uptime + "</div>\
+                            <div id=cpu>CPU : " + systems[i].cpumodel + " (" + systems[i].cpuload + "%) </div>\
+                            <div id=memory>Memory: " + systems[i].usedmem + " / "+ systems[i].totalmem + "Gb (avg: " + avgmem + "Gb)</div>\
+                            <div id=os>OS : " + systems[i].platform + " </div>\
+                            <div id=comsep></div>\
+                            <div id=shutdown onclick='sendshutdown( " + i + " )'><span class='mdi mdi-power' aria-hidden></span><div id=shuttext>Shutdown</div></div>\
+                            <div id=reboot onclick='sendreboot( " + i + " )'><span class='mdi mdi-rotate-right' aria-hidden></span><div id=shuttext>Reboot</div></div>\
+                        </div>";
                 }
 
-                systems.innerHTML = context;
+                systemsc.innerHTML = context;
             }
 
             sendshutdown = function(machine)
@@ -394,25 +429,7 @@
         </div>
 
         <div id=systems>
-            <div id=system>
-                <div id=machinelogo>
-                    <span class="mdi mdi-linux" aria-hidden></span>
-                </div>
-
-                <div id=litsep></div>
-
-                <div id=hostname>Hostname : Pixouille</div>
-                <div id=ip>IP : 127.0.0.1</div>
-                <div id=uptime>Uptime : 1 d, 3 h, 45 s</div>
-                <div id=cpu>CPU : Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz (1.5GHz)</div>
-                <div id=memory>Memory: 3.9 / 6.0G</div>
-                <div id=os>OS : Linux</div>
-
-                <div id=comsep></div>
-
-                <div id=shutdown onclick="sendshutdown(0)"><span class="mdi mdi-power" aria-hidden></span><div id=shuttext>Shutdown</div></div>
-                <div id=reboot onclick="sendreboot(0)"><span class="mdi mdi-rotate-right" aria-hidden></span><div id=shuttext>Reboot</div></div>
-            </div>
+            
         </div>
 
         <div id=maintitle>

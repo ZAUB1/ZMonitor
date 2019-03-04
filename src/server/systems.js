@@ -36,6 +36,7 @@ class Systems {
             corecount: data.corecount,
             totalmem: data.totalmem,
             cpufreq: data.cpufreq,
+            platform: data.platform,
 
             loadavg: data.loadavg,
             uptime: data.uptime,

@@ -71,8 +71,15 @@ function handler(req, res)
                     break;
 
                 case "/reboot":
-                    const sockm = Systems.GetSock(JSON.parse(body).machine);
-                    sockm.emit("reboot");
+                    const sockmr = Systems.GetSock(JSON.parse(body).machine);
+                    sockmr.emit("reboot");
+
+                    res.end();
+
+                    break;
+
+                case "/insys":
+                    
 
                     res.end();
 
