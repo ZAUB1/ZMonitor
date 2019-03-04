@@ -31,7 +31,7 @@ const verb = require("../../lib/verbose");
 
 function handler(req, res)
 {
-    verb.logok("-> Web Client connecting");
+    //verb.logok("-> Web Client connecting");
 
     fs.readFile(__dirname + "/panel/index.html",
 
@@ -59,7 +59,7 @@ function handler(req, res)
                 case "/sysget":
                     const sys = JSON.stringify(Systems.GetSystems());
                     res.end(sys);
-    
+
                     break;
                 
                 case "/shutdown":
@@ -79,7 +79,7 @@ function handler(req, res)
                     break;
 
                 case "/insys":
-                    
+                    io.emit("insysup");
 
                     res.end();
 
@@ -108,6 +108,10 @@ io.on("connection", (sock) => {
     });
 
     sock.on("client:alive", (sysdata) => {
+        Systems.UpdateSystem(slot, sysdata);
+    });
+
+    sock.on("client:updata", (sysdata) => {
         Systems.UpdateSystem(slot, sysdata);
     });
 

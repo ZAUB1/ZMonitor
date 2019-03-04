@@ -7,6 +7,8 @@ const socket = io("http://localhost:9999"); //@TODO
 console.log(":: ZMonitor client");
 
 SysData.FirstData(() => {
+    SysData.UpdateData();
+
     socket.emit("client:hello", SysData.FirstGet());
 
     setInterval(() => {
@@ -34,6 +36,12 @@ SysData.FirstData(() => {
 
     socket.on("reboot", () => {
         Shutdown.Reboot();
+    });
+
+    socket.on("insysup", () => {
+        setInterval(() => {
+            socket.emit("client:updata", SysData.Get());
+        }, 1000);
     });
 
     var tries = 0;

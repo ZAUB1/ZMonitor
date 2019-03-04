@@ -302,7 +302,7 @@
                         changetitle("ZMonitor");
 
                         systemsc.style.opacity = 0;
-                        
+
                         break;
                     case 1:
                         changetitle("ZMonitor : Systems");
@@ -310,7 +310,13 @@
                         systemsc.style.opacity = 1;
 
                         $.post('/insys', "", (data) => {
-                            
+                            setInterval(() => {
+                                $.post('/sysget', "", (data) => {
+                                    systems = JSON.parse(data);
+                                });
+
+                                showsystems();
+                            }, 500);
                         });
 
                         break;
