@@ -135,7 +135,8 @@
             position: relative;
             display: inline-block;
             overflow: auto;
-            width: 70%;
+            width: 80%;
+            height: 150px;
             color: black;
             margin: 5 auto;
             background-color: white;
@@ -144,20 +145,20 @@
         }
 
         #machinelogo {
-            position: relative;
+            position: absolute;
             height: 50px;
             font-size: 96px;
-            left: 5%;
+            left: 3%;
             top: 20%;
             width: 100px;
         }
 
         #litsep {
-            position: relative;
+            position: absolute;
             height: 120px;
-            top: 20%;
+            top: 50%;
             width: 1px;
-            left: 20%;
+            left: 15%;
             transform: translate(-50%, -50%);
             background-color: grey;
             border-radius: 15px;
@@ -166,8 +167,54 @@
         #hostname {
             position: absolute;
             font-size: 18px;
-            left: 22.5%;
+            left: 20%;
             top: 20%;
+        }
+
+        #ip {
+            position: absolute;
+            font-size: 18px;
+            left: 20%;
+            top: 40%;
+        }
+
+        #uptime {
+            position: absolute;
+            font-size: 18px;
+            left: 20%;
+            top: 60%;
+        }
+
+        #cpu {
+            position: absolute;
+            font-size: 18px;
+            left: 40%;
+            top: 20%;
+        }
+
+        #memory {
+            position: absolute;
+            font-size: 18px;
+            left: 40%;
+            top: 40%;
+        }
+
+        #os {
+            position: absolute;
+            font-size: 18px;
+            left: 40%;
+            top: 60%;
+        }
+
+        #comsep {
+            position: absolute;
+            height: 120px;
+            top: 50%;
+            width: 1px;
+            right: 17.5%;
+            transform: translate(-50%, -50%);
+            background-color: grey;
+            border-radius: 15px;
         }
     </style>
 
@@ -299,7 +346,13 @@
                     <span class="mdi mdi-linux" aria-hidden></span>
                 </div>
                 <div id=litsep></div>
-                <div id=hostname>Hostname : </div>
+                <div id=hostname>Hostname : Pixouille</div>
+                <div id=ip>IP : 127.0.0.1</div>
+                <div id=uptime>Uptime : 1 d, 3 h, 45 s</div>
+                <div id=cpu>CPU : Intel(R) Core(TM) i5-2520M CPU @ 2.50GHz (1.5GHz)</div>
+                <div id=memory>Memory: 3.9 / 6.0G</div>
+                <div id=os>OS : Linux</div>
+                <div id=comsep></div>
             </div>
         </div>
 
