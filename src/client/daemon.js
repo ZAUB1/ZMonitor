@@ -40,6 +40,7 @@ SysData.FirstData(() => {
 
     socket.on("insysup", () => {
         setInterval(() => {
+            SysData.UpdateData();
             socket.emit("client:updata", SysData.Get());
         }, 1000);
     });
