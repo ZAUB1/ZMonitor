@@ -23,7 +23,7 @@ module.exports = {
 }
 
 const app = require("http").createServer(handler);
-const io = require("socket.io")(app);
+const Sockets = require("zsockets")
 const fs = require("fs");
 const url = require("url");
 const path = require("path");
@@ -35,7 +35,7 @@ function handler(req, res)
 {
     //verb.logok("-> Web Client connecting");
 
-    /* fs.readFile(__dirname + "/panel/index.html",
+    fs.readFile(__dirname + "/panel/index.html",
 
     (err, data) => {
         if (err)
@@ -46,9 +46,9 @@ function handler(req, res)
 
         res.writeHead(200);
         res.end(data);
-    }); */
+    });
 
-    const pathname = url.parse(req.url).pathname;
+    /* const pathname = url.parse(req.url).pathname;
     const ext = path.extname(pathname);
 
     if (ext)
@@ -70,7 +70,7 @@ function handler(req, res)
         res.write(fs.readFileSync(__dirname + "/panel/index.html", "utf8"));
     }
 
-    res.end();
+    res.end(); */
 
     if (req.method === 'POST')
     {
@@ -90,7 +90,7 @@ function handler(req, res)
                 
                 case "/shutdown":
                     const sockm = Systems.GetSock(JSON.parse(body).machine);
-                    sockm.emit("shutdown");
+                    sockm.Emit("shutdown");
 
                     res.end();
 
@@ -98,16 +98,20 @@ function handler(req, res)
 
                 case "/reboot":
                     const sockmr = Systems.GetSock(JSON.parse(body).machine);
-                    sockmr.emit("reboot");
+                    sockmr.Emit("reboot");
 
                     res.end();
 
                     break;
 
                 case "/insys":
-                    io.emit("insysup");
+                    Server.EmitToAll("insysup");
 
                     res.end();
+
+                    break;
+
+                default:
 
                     break;
             }
@@ -117,32 +121,29 @@ function handler(req, res)
 
 app.listen(9999);
 
-verb.logok("-> Server listening on port : " + 9999);
+const Server = new Sockets.Server(500, () => {
+    verb.logok("-> Server listening on port : " + 9999);
+});
 
-/* app.post("/addsystem", (req, res) => {
-
-}); */
-
-io.on("connection", (sock) => {
+Server.OnInternal("connection", (c) => {
     const slot = Systems.systems.length;
 
-    verb.log("-> Client connected : " + sock.id + ", " + sock.handshake.address);
+    verb.log("-> Client connected : " + c.id + ", " + c.ip);
 
-    sock.on("client:hello", (sysdata) => {
-        //if (!Systems.Known(sysdata.hostname))
-            Systems.AddSystem(slot, sysdata, sock);
+    c.On("client:hello", (sysdata) => {
+        Systems.AddSystem(slot, sysdata, c);
     });
 
-    sock.on("client:alive", (sysdata) => {
+    c.On("client:alive", (sysdata) => {
         Systems.UpdateSystem(slot, sysdata);
     });
 
-    sock.on("client:updata", (sysdata) => {
+    c.On("client:updata", (sysdata) => {
         Systems.UpdateSystem(slot, sysdata);
-    });
-
-    sock.on("disconnect", () => {
-        Systems.RmSystem(sock.id);
-        verb.log("-> Client disconnected : " + sock.id + ", " + sock.handshake.address);
     });
 });
+
+Server.OnInternal("disconnected", (c) => {
+    Systems.RmSystem(c.id);
+    verb.log("-> Client disconnected : " + c.id + ", " + c.ip);
+})

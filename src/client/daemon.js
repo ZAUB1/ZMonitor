@@ -1,53 +1,53 @@
 const SysData = require("../../lib/systemdataget");
 const Shutdown = require("../../lib/shutdown");
-const io = require("socket.io-client");
+const Socket = require("zsockets");
 
-const socket = io("http://localhost:9999"); //@TODO
+const Client = new Socket.Client("127.0.0.1", 500);
 
 console.log(":: ZMonitor client");
 
 SysData.FirstData(() => {
     SysData.UpdateData();
 
-    socket.emit("client:hello", SysData.FirstGet());
+    Client.Emit("client:hello", SysData.FirstGet());
 
     setInterval(() => {
         SysData.UpdateData();
     }, 5000);
 
     setInterval(() => {
-        socket.emit("client:alive", SysData.Get());
+        Client.Emit("client:alive", SysData.Get());
     }, 60000);
 
-    socket.on('connect', () => {
+    Client.On('connect', () => {
         process.stdout.clearLine();
         process.stdout.cursorTo(0);
 
         console.log(":: Connected to server.");
     });
 
-    socket.on('disconnect', () => {
+    Client.On('disconnect', () => {
         console.log(":: Server lost, trying to reconnect.");
     })
 
-    socket.on("shutdown", () => {
+    Client.On("shutdown", () => {
         Shutdown.Shutdown();
     });
 
-    socket.on("reboot", () => {
+    Client.On("reboot", () => {
         Shutdown.Reboot();
     });
 
-    socket.on("insysup", () => {
+    Client.On("insysup", () => {
         setInterval(() => {
             SysData.UpdateData();
-            socket.emit("client:updata", SysData.Get());
+            Client.Emit("client:updata", SysData.Get());
         }, 1000);
     });
 
     var tries = 0;
 
-    setInterval(() => {
+    /* setInterval(() => {
         if (!socket.connected)
         {
             socket.open();
@@ -84,5 +84,5 @@ SysData.FirstData(() => {
 
             process.stdout.write("Connecting " + dots);
         }
-    }, 500);
+    }, 500); */
 });

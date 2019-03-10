@@ -11,7 +11,6 @@
     "server-stop": "node ./src/server/deamonize.js stop",
     "server-console": "node ./src/server/deamon.js -v -c",
     "server-verbose": "node ./src/server/deamon.js -v",
-
     "client-verbose": "node ./src/client/daemon.js",
     "client-start": "node ./src/client/deamonize.js start",
     "client-stop": "node ./src/client/deamonize.js stop"
@@ -28,6 +27,6 @@
   "homepage": "https://github.com/ZAUB1/ZMonitor#readme",
   "dependencies": {
     "daemonize2": "^0.4.2",
-    "socketio": "^1.0.0"
+    "zsockets": "^1.0.4"
   }
 }
