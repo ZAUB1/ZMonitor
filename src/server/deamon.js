@@ -23,7 +23,7 @@ module.exports = {
 }
 
 const app = require("http").createServer(handler);
-const Sockets = require("zsockets")
+const Sockets = require("zsockets");
 const fs = require("fs");
 const url = require("url");
 const path = require("path");
@@ -125,6 +125,10 @@ const Server = new Sockets.Server(500, () => {
     verb.logok("-> Server listening on port : " + 9999);
 });
 
+const WSS = new Sockets.WebSocketServer(8080, () => {
+    verb.logok("-> Web socket listening on port : " + 9999);
+});
+
 Server.OnInternal("connection", (c) => {
     const slot = Systems.systems.length;
 
@@ -140,6 +144,14 @@ Server.OnInternal("connection", (c) => {
 
     c.On("client:updata", (sysdata) => {
         Systems.UpdateSystem(slot, sysdata);
+    });
+});
+
+WSS.OnInternal("connection", (c) => {
+    verb.log("-> Web Client connected");
+
+    c.On("getsystems", () => {
+        c.Emit("systemscb", Systems.GetSystems());
     });
 });
 
