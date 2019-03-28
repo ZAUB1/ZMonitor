@@ -25,6 +25,8 @@ module.exports = {
 const app = require("http").createServer(handler);
 const Sockets = require("zsockets");
 const fs = require("fs");
+const url = require("url");
+const path = require("path");
 
 const Systems = require("./systems");
 const verb = require("../../lib/verbose");
@@ -34,18 +36,28 @@ var webclientcur = 0;
 
 function handler(req, res)
 {
-    fs.readFile(__dirname + "/panel/index.html",
-
-    (err, data) => {
-        if (err)
+    const pathname = url.parse(req.url).pathname;
+    const ext = path.extname(pathname);
+    if (ext)
+    {
+        if(ext === ".css")
         {
-            res.writeHead(500);
-            return res.end("Error loading index.html");
+            res.writeHead(200, {"Content-Type": "text/css"});
+            res.write(fs.readFileSync(__dirname + pathname, "utf8"));
         }
+        else if (ext === ".js")
+        {
+            res.writeHead(200, {"Content-Type": "text/javascript"});
+            res.write(fs.readFileSync(__dirname + pathname, "utf8"));
+        }
+    }
+    else
+    {
+        res.writeHead(200, {"Content-Type": "text/html"});
+        res.write(fs.readFileSync(__dirname + "/panel/index.html", "utf8"));
+    }
 
-        res.writeHead(200);
-        res.end(data);
-    });
+    res.end();
 }
 
 app.listen(9999);
