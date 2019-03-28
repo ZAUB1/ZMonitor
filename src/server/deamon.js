@@ -122,7 +122,7 @@ function handler(req, res)
 app.listen(9999);
 
 const Server = new Sockets.Server(500, () => {
-    verb.logok("-> Server listening on port : " + 9999);
+    verb.logok("-> Server listening on port : " + 500);
 });
 
 const WSS = new Sockets.WebSocketServer(8080, () => {
