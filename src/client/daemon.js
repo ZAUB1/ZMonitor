@@ -17,7 +17,7 @@ SysData.FirstData(() => {
 
     setInterval(() => {
         Client.Emit("client:alive", SysData.Get());
-    }, 60000);
+    }, 5000);
 
     Client.On('connect', () => {
         process.stdout.clearLine();

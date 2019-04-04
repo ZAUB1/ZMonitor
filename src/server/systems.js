@@ -44,9 +44,6 @@ class Systems {
             usedmem: data.usedmem,
             cpuload: data.cpuloadper,
 
-            usedmemavg: [data.usedmem],
-            cpuloadavg: [data.cpuloadper],
-
             ifips: data.ifips,
 
             sock: sock.id,
@@ -65,9 +62,6 @@ class Systems {
     {
         this.systems[slot].usedmem = data.usedmem;
         this.systems[slot].cpuload = data.cpuloadper;
-
-        this.systems[slot].usedmemavg[this.systems[slot].usedmemavg.length] = data.usedmem;
-        this.systems[slot].cpuloadavg[this.systems[slot].cpuloadavg.length] = data.cpuloadper;
     }
 
     GetSystems()

@@ -34,6 +34,9 @@ const verb = require("../../lib/verbose");
 var webclients = [0];
 var webclientcur = 0;
 
+var lram = 0.0;
+var lcpu = 0.0;
+
 function handler(req, res)
 {
     const pathname = url.parse(req.url).pathname;
@@ -96,6 +99,7 @@ WSS.OnInternal("connection", (c) => {
     c.On("getsystems", () => {
         c.Emit("systemscb", Systems.GetSystems());
         c.Emit("webconnections", webclients);
+        c.Emit("avg", {ram: lram, cpu: lcpu});
     });
 });
 
@@ -107,4 +111,20 @@ Server.OnInternal("disconnected", (c) => {
 setInterval(() => {
     webclients[webclients.length] = webclientcur;
     webclientcur = 0;
-}, 60000);
+
+    const sys = Systems.GetSystems();
+
+    lram = 0.0;
+
+    for (let i = 0; i < sys.length; i++)
+        lram += parseFloat(sys[i].usedmem);
+
+    lram = lram / sys.length;
+
+    lcpu = 0.0;
+
+    for (let i = 0; i < sys.length; i++)
+        lcpu += parseFloat(sys[i].cpuload);
+
+    lcpu = (lcpu / sys.length).toFixed(1);
+}, 6000);
